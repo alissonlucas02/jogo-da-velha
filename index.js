@@ -38,6 +38,11 @@ function XorO(bloco){
         if(vencedor){
          animationWin()
         }
+        else{
+            if(countEmpat >9){
+                tagp('VELHA, EMPATE!','empat','red')
+            }
+        }
 
         bloco.target.removeEventListener('click',XorO);
         
@@ -101,10 +106,7 @@ function VerificadeWin(letra,lista, name){
                     validationInclude = 0
                 }
             }
-        if(countEmpat==9){
-            tagp('VELHA, EMPATE!','empat','red')
-            break
-        }
+        
         if(validationInclude == 3){  
             document.getElementById('mensagem').innerText ='parabens o '+name+' ganhou'
             document.body.style.backgroundImage = "url(./832301_14b4a.gif"
@@ -113,6 +115,7 @@ function VerificadeWin(letra,lista, name){
                 bloco.removeEventListener('click',XorO)
             })
         }
+        
 }
 countEmpat++
 }
