@@ -19,6 +19,20 @@ body{
     
 }
 
+#animationWin{
+    animation: go-back 2s linear infinite;
+    background-color: 00ff7b;
+
+}
+@keyframes go-back {
+    0% {opacity: 1;}
+    50% {opacity: 0.2;}
+    100% {opacity: 1;}
+}
+.blocoVelha{
+    background-color: #00ff7b;
+}
+
 td{
     padding: 5rem;
 }
@@ -36,4 +50,9 @@ td{
 th{
     border-radius: 2rem;
     border-color: #00ff7b;
+}
+
+#reloadBtn{
+    padding: 1rem;
+    border-radius: 1rem;
 }
