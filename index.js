@@ -1,6 +1,8 @@
 let Nthistimex = 'X'
 let listX = []
 let listO = []
+let sequenciWin = []
+let vencedor
 
 function XorO(bloco){
         const game1 = document.getElementById('game1')
@@ -19,19 +21,24 @@ function XorO(bloco){
             game2.style.color ='#696b6a'
             game1.style.color = '#00ff7b'
             listO.push(parseFloat(bloco.target.dataset.value))
+            
         }
         switch(Nthistimex){
             case 'X':
-                VerificadeWin('O',listO)
+                VerificadeWin('O',listO,name2Gamer)
                 break
             case 'O':
-                VerificadeWin('X',listX)
+                VerificadeWin('X',listX,name1Gamer)
                 break
             default:
                 console.log('error')
                 break
 
         }
+        if(vencedor){
+         animationWin()
+        }
+
         bloco.target.removeEventListener('click',XorO);
         
     }
@@ -39,6 +46,17 @@ function XorO(bloco){
 document.querySelectorAll('.blocoVelha').forEach(function(blocos){
     blocos.addEventListener('click', XorO)
 })
+
+function animationWin(){
+    document.querySelectorAll('.blocoVelha').forEach(function(blocos){
+        for(let i = 0; i < 3; i++){
+            if(parseFloat(blocos.dataset.value)===sequenciWin[i]){
+            blocos.id = 'animationWin'
+        }
+        
+        }
+    })
+    }
 
 const winningSequences = [
     [1, 2, 3], // Linha Horizontal Superior
@@ -52,8 +70,8 @@ const winningSequences = [
 ];
 
 let = validationInclude = 0
-
-function VerificadeWin(letra,lista){
+let = countEmpat = 1
+function VerificadeWin(letra,lista, name){
         for(let i = 0; i< winningSequences.length; i++){
             validationInclude = 0
             for(let j = 0; j < winningSequences[i].length; j++){
@@ -62,6 +80,18 @@ function VerificadeWin(letra,lista){
                     console.log('yes, inclui')
                     validationInclude += 1
                     if(validationInclude == 3){
+                        const game1 = document.getElementById('game1')
+                        const game2 = document.getElementById('game2')
+                        if(letra ==='X'){
+                            game2.style.color ='#696b6a'
+                            game1.style.color = '#00ff7b'
+                        }else{
+                            game1.style.color = '#696b6a'
+                            game2.style.color = '#00ff7b'
+                        }
+                        
+                        sequenciWin = winningSequences[i]
+                        vencedor = true
                         break
                     }
                 
@@ -71,15 +101,21 @@ function VerificadeWin(letra,lista){
                     validationInclude = 0
                 }
             }
+        if(countEmpat==9){
+            tagp('VELHA, EMPATE!','empat','red')
+            break
+        }
         if(validationInclude == 3){  
-            document.getElementById('mensagem').innerText ='parabens o '+letra+' ganhou'
+            document.getElementById('mensagem').innerText ='parabens o '+name+' ganhou'
             document.body.style.backgroundImage = "url(./832301_14b4a.gif"
             document.body.style.backgroundColor = 'black'
             document.querySelectorAll('.blocoVelha').forEach(function(bloco){
                 bloco.removeEventListener('click',XorO)
             })
         }
-}}
+}
+countEmpat++
+}
 
 const divgame =  document.getElementById('namegame')
 
@@ -91,17 +127,21 @@ function tagp(value, id,color = '#00ff7b'){
     divgame.appendChild((name1))
     return name1
 }
+
+let name1Gamer = ''
+let name2Gamer = ''
+
 function addnamegame(){
     const gameinfo = document.getElementById('gameinfo')
-    const input1 = document.getElementById('game1').value
-    const input2 = document.getElementById('game2').value
+    name1Gamer = document.getElementById('game1').value
+    name2Gamer = document.getElementById('game2').value
     
     
-    if (input1 != '' && input2 != ''){
+    if (name1Gamer != '' && name2Gamer != ''){
         divgame.removeChild(gameinfo)
         document.getElementById('gameVelha').removeAttribute('hidden')
-        tagp(('Jogador 1: '+input1),'game1', '#00ff7b')
-        tagp(('Jogador 2: '+input2), 'game2','#696b6a')
+        tagp(('Jogador 1: '+name1Gamer),'game1', '#00ff7b')
+        tagp(('Jogador 2: '+name2Gamer), 'game2','#696b6a')
         console.log(input1)
     }else{
         alert('preencha os campos')
